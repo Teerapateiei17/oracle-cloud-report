@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oracle Cloud Infrastructure (OCI)</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    :root{
+      --oracle:#c74634;
+      --oracle-dark:#8f2f23;
+      --navy:#111827;
+      --dark:#0b1018;
+      --light:#f5f6f8;
+      --text:#27303f;
+    }
+
+    html{scroll-behavior:smooth}
+    body{
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      color:var(--text);
+      background:var(--light);
+    }
+
+    .navbar{
+      background:rgba(11,16,24,.96)!important;
+      backdrop-filter:blur(10px);
+    }
+    .navbar-brand{
+      font-weight:800;
+      letter-spacing:.5px;
+    }
+    .brand-mark{
+      width:36px;height:36px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      background:var(--oracle);
+      border-radius:9px;
+      margin-right:8px;
+    }
+    .nav-link{color:#d9dee7!important}
+    .nav-link:hover{color:#fff!important}
+
+    .hero{
+      min-height:650px;
+      padding:150px 0 100px;
+      color:#fff;
+      background:
+        radial-gradient(circle at 80% 25%, rgba(199,70,52,.35), transparent 28%),
+        radial-gradient(circle at 20% 80%, rgba(199,70,52,.18), transparent 25%),
+        linear-gradient(135deg,#080c13,#172132 65%,#351613);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero:after{
+      content:"";
+      position:absolute;
+      width:420px;height:420px;
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:50%;
+      right:-100px;bottom:-180px;
+      box-shadow:0 0 0 60px rgba(255,255,255,.02),0 0 0 120px rgba(255,255,255,.015);
+    }
+    .hero-badge{
+      display:inline-block;
+      padding:8px 15px;
+      border:1px solid rgba(255,255,255,.2);
+      background:rgba(255,255,255,.06);
+      border-radius:50px;
+      color:#fff;
+      margin-bottom:20px;
+    }
+    .hero h1{
+      font-size:clamp(2.5rem,6vw,5rem);
+      font-weight:800;
+      line-height:1.02;
+    }
+    .hero h1 span{color:#f36b55}
+    .hero p{
+      color:#cbd5e1;
+      font-size:1.08rem;
+      max-width:720px;
+    }
+    .btn-oracle{
+      background:var(--oracle);
+      color:#fff;
+      border:none;
+      font-weight:700;
+      padding:12px 22px;
+      border-radius:10px;
+    }
+    .btn-oracle:hover{background:var(--oracle-dark);color:#fff}
+    .btn-outline-light{border-radius:10px;padding:11px 22px}
+
+    section{padding:90px 0}
+    .section-title{font-weight:800;color:var(--navy)}
+    .section-title span{color:var(--oracle)}
+    .section-desc{max-width:760px;color:#667085}
+
+    .stat-card,.service-card,.info-card,.pros-card,.cons-card{
+      border:1px solid #e5e7eb;
+      border-radius:18px;
+      background:#fff;
+      box-shadow:0 10px 30px rgba(15,23,42,.05);
+      transition:.25s ease;
+    }
+    .stat-card:hover,.service-card:hover,.info-card:hover,.pros-card:hover,.cons-card:hover{
+      transform:translateY(-5px);
+      box-shadow:0 18px 40px rgba(15,23,42,.10);
+    }
+    .stat-card{padding:25px;height:100%}
+    .stat-icon,.service-icon{
+      width:52px;height:52px;
+      border-radius:14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#fff1ee;
+      color:var(--oracle);
+      font-size:1.5rem;
+    }
+
+    /* ตกแต่ง Service Card ให้กดลิงก์ได้ */
+    a.service-card{
+      display:block;
+      text-decoration:none;
+      color:inherit;
+      padding:30px;
+      height:100%;
+      position:relative;
+      overflow:hidden;
+    }
+    a.service-card:hover{
+      color:inherit;
+    }
+    .service-card:before{
+      content:"";
+      position:absolute;
+      top:0;left:0;
+      width:100%;height:4px;
+      background:var(--oracle);
+      transform:scaleX(0);
+      transform-origin:left;
+      transition:.25s ease;
+    }
+    .service-card:hover:before{transform:scaleX(1)}
+    .service-card .external-link-icon{
+      position:absolute;
+      top:25px;
+      right:25px;
+      font-size:1.1rem;
+      color:#9ca3af;
+      transition:.2s ease;
+    }
+    .service-card:hover .external-link-icon{
+      color:var(--oracle);
+      transform:translate(2px, -2px);
+    }
+    .service-number{
+      font-size:.78rem;
+      font-weight:800;
+      letter-spacing:1.5px;
+      color:var(--oracle);
+      margin-top:18px;
+    }
+    .service-card h4{
+      font-weight:900;
+      font-size:1.8rem;
+      margin:4px 0 3px;
+      color:var(--navy);
+      letter-spacing:-.5px;
+    }
+    .service-fullname{
+      font-size:.92rem;
+      font-weight:700;
+      color:#4b5563;
+      margin-bottom:12px;
+    }
+    .service-card p{color:#667085;font-size:.95rem}
+    .tag{
+      display:inline-block;
+      background:#f3f4f6;
+      color:#4b5563;
+      padding:5px 9px;
+      border-radius:6px;
+      font-size:.78rem;
+      margin:2px;
+    }
+
+    .dark-section{
+      background:var(--dark);
+      color:#fff;
+    }
+    .dark-section .section-title{color:#fff}
+    .dark-section .section-desc{color:#aeb8c8}
+
+    .architecture{
+      background:linear-gradient(135deg,#171e2b,#0b1018);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:25px;
+      padding:35px;
+    }
+    .architecture-box{
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:15px;
+      padding:22px;
+      height:100%;
+    }
+    .architecture-box i{font-size:2rem;color:#f36b55}
+    .arrow{
+      font-size:1.7rem;
+      color:#f36b55;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+
+    .pricing-card{
+      padding:32px;
+      height:100%;
+      border-radius:20px;
+      background:#fff;
+      border:1px solid #e5e7eb;
+    }
+    .pricing-card.featured{
+      border:2px solid var(--oracle);
+      position:relative;
+    }
+    .pricing-card.featured:before{
+      content:"Cloud Flexible";
+      position:absolute;
+      top:-14px;right:25px;
+      background:var(--oracle);
+      color:#fff;
+      padding:5px 12px;
+      border-radius:20px;
+      font-size:.75rem;
+      font-weight:700;
+    }
+
+    .pros-card,.cons-card{padding:30px;height:100%}
+    .pros-card{border-top:5px solid #198754}
+    .cons-card{border-top:5px solid var(--oracle)}
+    .check{color:#198754}
+    .cross{color:var(--oracle)}
+
+    .timeline{
+      position:relative;
+      max-width:900px;
+      margin:auto;
+    }
+    .timeline:before{
+      content:"";
+      position:absolute;
+      left:50%;
+      top:0;bottom:0;
+      width:3px;
+      background:#e5e7eb;
+      transform:translateX(-50%);
+    }
+    .timeline-item{
+      position:relative;
+      width:50%;
+      padding:15px 35px;
+    }
+    .timeline-item:nth-child(odd){left:0;text-align:right}
+    .timeline-item:nth-child(even){left:50%}
+    .timeline-dot{
+      position:absolute;
+      top:28px;
+      width:18px;height:18px;
+      background:var(--oracle);
+      border:4px solid #fff;
+      border-radius:50%;
+      box-shadow:0 0 0 2px var(--oracle);
+    }
+    .timeline-item:nth-child(odd) .timeline-dot{right:-9px}
+    .timeline-item:nth-child(even) .timeline-dot{left:-9px}
+    .timeline-content{
+      background:#fff;
+      border:1px solid #e5e7eb;
+      border-radius:16px;
+      padding:22px;
+      box-shadow:0 8px 25px rgba(15,23,42,.05);
+    }
+
+    .summary-box{
+      border-radius:24px;
+      padding:45px;
+      background:linear-gradient(135deg,var(--oracle),#8f2f23);
+      color:#fff;
+      box-shadow:0 20px 50px rgba(199,70,52,.25);
+    }
+
+    footer{
+      background:#080c13;
+      color:#9ca3af;
+      padding:40px 0;
+    }
+    footer strong{color:#fff}
+
+    .back-top{
+      position:fixed;
+      right:22px;bottom:22px;
+      width:46px;height:46px;
+      border:0;
+      border-radius:50%;
+      background:var(--oracle);
+      color:#fff;
+      display:none;
+      z-index:1000;
+      box-shadow:0 8px 25px rgba(0,0,0,.25);
+    }
+
+    @media(max-width:767px){
+      .hero{min-height:590px;padding-top:120px}
+      section{padding:65px 0}
+      .timeline:before{left:8px}
+      .timeline-item,.timeline-item:nth-child(even){
+        width:100%;left:0!important;
+        text-align:left!important;
+        padding-left:35px;
+        padding-right:0;
+      }
+      .timeline-item:nth-child(odd) .timeline-dot,
+      .timeline-item:nth-child(even) .timeline-dot{
+        left:0;right:auto;
+      }
+      .architecture{padding:22px}
+    }
+  
+    /* Data Center contrast */
+    #datacenter .section-desc{
+      color:#667085 !important;
+      font-weight:500;
+    }
+    #datacenter .architecture-box h5{
+      color:#f8fafc !important;
+      font-weight:800;
+    }
+    #datacenter .architecture-box p{
+      color:#d7dee9 !important;
+      font-weight:500;
+    }
+    #datacenter .info-card h5{
+      color:#273244 !important;
+      font-weight:800;
+    }
+    #datacenter .info-card p{
+      color:#667085 !important;
+      font-weight:500;
+    }
+    #datacenter .info-card{
+      color:#273244;
+    }
+</style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#home">
+      <span class="brand-mark"><i class="bi bi-cloud-fill"></i></span>
+      ORACLE CLOUD
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#about">OCI</a></li>
+        <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+        <li class="nav-item"><a class="nav-link" href="#datacenter">Data Center</a></li>
+        <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
+        <li class="nav-item"><a class="nav-link" href="#proscons">Pros & Cons</a></li>
+        <li class="nav-item"><a class="nav-link" href="#certification">Certification</a></li>
+        <li class="nav-item"><a class="nav-link" href="#team">ผู้จัดทำ</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<header id="home" class="hero">
+  <div class="container position-relative" style="z-index:2">
+    <div class="hero-badge"><i class="bi bi-cloud-check me-2"></i>Cloud Computing Report • 2026</div>
+    <h1>Oracle Cloud<br><span>Infrastructure</span></h1>
+    <p class="mt-4">
+      แพลตฟอร์ม Cloud Computing ของ Oracle ที่ให้บริการทรัพยากร
+      และเทคโนโลยีสารสนเทศผ่านระบบ Cloud ตั้งแต่ Infrastructure,
+      Database, Storage, Networking, Security ไปจนถึง Analytics และ Serverless
+    </p>
+    <div class="d-flex flex-wrap gap-3 mt-4">
+      <a href="#services" class="btn btn-oracle"><i class="bi bi-grid-3x3-gap me-2"></i>สำรวจบริการ</a>
+      <a href="#about" class="btn btn-outline-light"><i class="bi bi-arrow-down-circle me-2"></i>เรียนรู้ OCI</a>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="text-uppercase fw-bold small" style="color:var(--oracle)">Oracle Cloud Infrastructure</div>
+      <h2 class="section-title display-6 mt-2">Oracle Cloud คืออะไร?</h2>
+      <p class="section-desc mx-auto mt-3">
+        Oracle Cloud หรือ Oracle Cloud Infrastructure (OCI) เป็นแพลตฟอร์ม Cloud Computing
+        ของ Oracle ที่ช่วยให้ผู้ใช้งานเลือกใช้ทรัพยากรด้าน IT ผ่าน Cloud
+        โดยไม่จำเป็นต้องลงทุนจัดซื้อและดูแล Server หรือ Infrastructure ทั้งหมดด้วยตนเอง
+      </p>
+    </div>
+
+    <div class="row g-4 mb-5">
+      <div class="col-md-3 col-6">
+        <div class="stat-card">
+          <div class="stat-icon"><i class="bi bi-cpu"></i></div>
+          <h5 class="fw-bold mt-3">Compute</h5>
+          <p class="small text-secondary mb-0">ทรัพยากรประมวลผลสำหรับ Application</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-6">
+        <div class="stat-card">
+          <div class="stat-icon"><i class="bi bi-database"></i></div>
+          <h5 class="fw-bold mt-3">Database</h5>
+          <p class="small text-secondary mb-0">บริการฐานข้อมูลบน Cloud</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-6">
+        <div class="stat-card">
+          <div class="stat-icon"><i class="bi bi-hdd-stack"></i></div>
+          <h5 class="fw-bold mt-3">Storage</h5>
+          <p class="small text-secondary mb-0">จัดเก็บข้อมูลหลายรูปแบบ</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-6">
+        <div class="stat-card">
+          <div class="stat-icon"><i class="bi bi-shield-lock"></i></div>
+          <h5 class="fw-bold mt-3">Security</h5>
+          <p class="small text-secondary mb-0">ควบคุมสิทธิ์และรักษาความปลอดภัย</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-card p-4 p-lg-5">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+          <h3 class="fw-bold">รองรับทั้งผู้ใช้ทั่วไป นักพัฒนา และองค์กร</h3>
+          <p class="text-secondary">
+            OCI สามารถรองรับการทำงานร่วมกับเทคโนโลยีสมัยใหม่ เช่น Container,
+            Kubernetes, Serverless, Big Data, Artificial Intelligence และ Machine Learning
+            ทำให้สามารถนำไปสร้างระบบตั้งแต่เว็บไซต์ทั่วไปจนถึงระบบ Enterprise ขนาดใหญ่
+          </p>
+        </div>
+        <div class="col-lg-5">
+          <div class="p-4 rounded-4" style="background:#fff1ee">
+            <div class="fw-bold mb-3" style="color:var(--oracle)">OCI Ecosystem</div>
+            <span class="tag">Kubernetes</span>
+            <span class="tag">Serverless</span>
+            <span class="tag">Big Data</span>
+            <span class="tag">AI / ML</span>
+            <span class="tag">Enterprise</span>
+            <span class="tag">Database</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 บริการสำคัญของ Oracle Cloud (คลิกเพื่อไปยังเว็บไซต์ทางการของ Oracle ได้) -->
+<section id="services" class="dark-section">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="text-uppercase fw-bold small" style="color:#f36b55">OCI Services</div>
+      <h2 class="section-title display-5 mt-2">10 บริการสำคัญของ Oracle Cloud</h2>
+      <p class="section-desc mx-auto mt-3">
+        สำรวจและคลิกที่การ์ดเพื่อไปยังหน้าเว็บไซต์ทางการของ Oracle ในแต่ละบริการ
+      </p>
+    </div>
+
+    <div class="row g-4">
+
+      <!-- 01. IaaS -->
+      <div class="col-lg-4 col-md-6">
+        <a href="https://www.oracle.com/cloud/compute/" target="_blank" rel="noopener noreferrer" class="service-card">
+          <i class="bi bi-box-arrow-up-right external-link-icon"></i>
+          <div class="service-icon"><i class="bi bi-cpu"></i></div>
+          <div class="service-number">01 · CLOUD INFRASTRUCTURE</div>
+          <h4>IaaS</h4>
+          <div class="service-fullname">Infrastructure as a Service</div>
+          <p>ให้เช่าใช้ Compute, Memory, Storage และ Network ผ่าน Cloud แทนการซื้อ Server และอุปกรณ์เอง</p>
+          <span class="tag">Compute</span><span class="tag">VCN</span><span class="tag">Storage</span>
+        </a>
+      </div>
+
+      <!-- 02. CaaS -->
+      <div class="col-lg-4 col-md-6">
+        <a href="https://www.oracle.com/cloud/cloud-native/kubernetes-engine/" target="_blank" rel="noopener noreferrer" class="service-card">
+          <i class="bi bi-box-arrow-up-right external-link-icon"></i>
+          <div class="service-icon"><i class="bi bi-boxes"></i></div>
+          <div class="service-number">02 · CLOUD CONTAINER</div>
+          <h4>CaaS</h4>
+          <div class="service-fullname">Container as a Service</div>
+          <p>สร้าง จัดการ และนำ Application แบบ Container ไปใช้งานบน Cloud โดยรองรับ Kubernetes และ Microservices</p>
+          <span class="tag">OKE</span><span class="tag">Container</span><span class="tag">Registry</span>
+        </a>
+      </div>
+
+      <!-- 03. FaaS -->
+      <div class="col-lg-4 col-md-6">
+        <a href="https://www.oracle.com/cloud/cloud-native/functions/" target="_blank" rel="noopener noreferrer" class="service-card">
+          <i class="bi bi-box-arrow-up-right external-link-icon"></i>
+          <div class="service-icon"><i class="bi bi-lightning-charge"></i></div>
+          <div class="service-number">03 · SERVERLESS COMPUTING</div>
+          <h4>FaaS</h4>
+          <div class="service-fullname">Function as a Service</div>
+          <p>บริการ Serverless สำหรับรัน Function เมื่อเกิดเหตุการณ์ โดยไม่ต้องบริหาร Server หรือ OS เอง</p>
+          <span class="tag">OCI Functions</span><span class="tag">Serverless</span>
+        </a>
+      </div>
+
+      <!-- 04. DBaaS -->
+      <div class="col-lg-4 col-md-6">
+        <a href="https://www.oracle.com/autonomous-database/" target="_blank" rel="noopener noreferrer" class="service-card">
+          <i class="bi bi-box-arrow-up-right external-link-icon"></i>
+          <div class="service-icon"><i class="bi bi-database"></i></div>
+          <div class="service-number">04 · CLOUD DATABASE</div>
+          <h4>DBaaS</h4>
+          <div class="service-fullname">Database as a Service</div>
+          <p>สร้างและใช้งาน Database บน Cloud โดยไม่ต้องจัดเตรียม Database Server ด้วยตนเอง</p>
+          <span class="tag">Autonomous DB</span><span class="tag">MySQL HeatWave</span><span class="tag">NoSQL</span>
+        </a>
+      </div>
+
+      <!-- 05. Security -->
+      <div class="col-lg-4 col-md-6">
+        <a href="https://www.oracle.com/security/cloud-security/" target="_blank" rel="noopener noreferrer" class="service-card">
+          <i class="bi bi-box-arrow-up-right external-link-icon"></i>
+          <div class="service-icon"><i class="bi bi-shield-lock"></i></div>
+          <div class="service-number">05 · SECURITY</div>
+          <h4>Security & Identity</h4>
+          <div class="service-fullname">ความปลอดภัยและการจัดการสิทธิ์</div>
+          <p>ควบคุมการเข้าถึงทรัพยากรและป้องกันระบบด้วย IAM, Cloud Guard, Vault, WAF และ Network Firewall</p>
+          <span class="tag">IAM</span><span class="tag">Cloud Guard</span><span class="tag">Firewall</span>
+        </a>
+      </div>
+
+      <!-- 06. IoT -->
+      <div class="col-lg-4 col-md-6">
+        <a href="https://www.oracle.com/internet-of-things/" target="_blank" rel="noopener noreferrer" class="service-card">
+          <i class="bi bi-box-arrow-up-right external-link-icon"></i>
+          <div class="service-icon"><i class="bi bi-cpu-fill"></i></div>
+          <div class="service-number">06 · CONNECTED DEVICES</div>
+          <h4>IoT</h4>
+          <div class="service-fullname">Internet of Things</div>
+          <p>เชื่อมต่อ Sensor และอุปกรณ์ต่าง ๆ กับ Cloud เพื่อจัดเก็บ ประมวลผล และวิเคราะห์ข้อมูล</p>
+          <span class="tag">Sensor</span><span class="tag">Monitoring</span><span class="tag">Analytics</span>
+        </a>
+      </div>
+
+      <!-- 07. STaaS -->
+      <div class="col-lg-4 col-md-6">
+        <a href="https://www.oracle.com/cloud/storage/" target="_blank" rel="noopener noreferrer" class="service-card">
+          <i class="bi bi-box-arrow-up-right external-link-icon"></i>
+          <div class="service-icon"><i class="bi bi-hdd-stack"></i></div>
+          <div class="service-number">07 · CLOUD STORAGE</div>
+          <h4>STaaS</h4>
+          <div class="service-fullname">Storage as a Service</div>
+          <p>พื้นที่จัดเก็บข้อมูลบน Cloud เช่น Object Storage, Block Volume, File Storage และ Archive Storage</p>
+          <span class="tag">Object</span><span class="tag">Block</span><span class="tag">File</span><span class="tag">Archive</span>
+        </a>
+      </div>
+
+      <!-- 08. Big Data & Analytics -->
+      <div class="col-lg-4 col-md-6">
+        <a href="https://www.oracle.com/business-analytics/analytics-cloud/" target="_blank" rel="noopener noreferrer" class="service-card">
+          <i class="bi bi-box-arrow-up-right external-link-icon"></i>
+          <div class="service-icon"><i class="bi bi-bar-chart-line"></i></div>
+          <div class="service-number">08 · DATA & ANALYTICS</div>
+          <h4>Big Data & Analytics</h4>
+          <div class="service-fullname">การจัดการและวิเคราะห์ข้อมูล</div>
+          <p>รวบรวม ประมวลผล และวิเคราะห์ข้อมูลจำนวนมากจาก Database, Application, Website และ IoT</p>
+          <span class="tag">Analytics Cloud</span><span class="tag">Data Flow</span><span class="tag">Streaming</span>
+        </a>
+      </div>
+
+      <!-- 09. Blockchain -->
+      <div class="col-lg-4 col-md-6">
+        <a href="https://www.oracle.com/blockchain/" target="_blank" rel="noopener noreferrer" class="service-card">
+          <i class="bi bi-box-arrow-up-right external-link-icon"></i>
+          <div class="service-icon"><i class="bi bi-link-45deg"></i></div>
+          <div class="service-number">09 · BLOCKCHAIN</div>
+          <h4>BCaaS</h4>
+          <div class="service-fullname">Blockchain as a Service</div>
+          <p>นำ Blockchain มาใช้งานผ่าน Cloud เพื่อบันทึก Transaction และตรวจสอบข้อมูลย้อนหลัง</p>
+          <span class="tag">Blockchain</span><span class="tag">Supply Chain</span><span class="tag">Transaction</span>
+        </a>
+      </div>
+
+      <!-- 10. Load Balancer -->
+      <div class="col-lg-4 col-md-6">
+        <a href="https://www.oracle.com/cloud/networking/flexible-load-balancer/" target="_blank" rel="noopener noreferrer" class="service-card">
+          <i class="bi bi-box-arrow-up-right external-link-icon"></i>
+          <div class="service-icon"><i class="bi bi-diagram-3"></i></div>
+          <div class="service-number">10 · NETWORKING</div>
+          <h4>LBaaS</h4>
+          <div class="service-fullname">Load Balancer as a Service</div>
+          <p>กระจาย Traffic ไปยัง Server หลายเครื่อง พร้อม Health Check เพื่อสนับสนุน High Availability</p>
+          <span class="tag">Load Balancer</span><span class="tag">Health Check</span><span class="tag">High Availability</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="datacenter">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="text-uppercase fw-bold small" style="color:var(--oracle)">Infrastructure</div>
+      <h2 class="section-title display-6 mt-2">Data Center & Cloud Region</h2>
+      <p class="section-desc mx-auto mt-3">
+        Oracle Cloud ใช้โครงสร้างพื้นฐานที่ประกอบด้วย Region และ Availability Domain
+        เพื่อรองรับความพร้อมใช้งานและการออกแบบระบบที่ทนทาน
+      </p>
+    </div>
+
+    <div class="architecture">
+      <div class="row g-3 align-items-center">
+        <div class="col-md-3">
+          <div class="architecture-box text-center">
+            <i class="bi bi-globe2"></i>
+            <h5 class="mt-3">Region</h5>
+            <p class="small text-secondary mb-0">พื้นที่ทางภูมิศาสตร์ที่ Oracle ให้บริการ Cloud</p>
+          </div>
+        </div>
+        <div class="col-md-1 arrow"><i class="bi bi-arrow-right"></i></div>
+        <div class="col-md-3">
+          <div class="architecture-box text-center">
+            <i class="bi bi-buildings"></i>
+            <h5 class="mt-3">Availability Domain</h5>
+            <p class="small text-secondary mb-0">กลุ่ม Data Center ภายใน Region</p>
+          </div>
+        </div>
+        <div class="col-md-1 arrow"><i class="bi bi-arrow-right"></i></div>
+        <div class="col-md-4">
+          <div class="architecture-box text-center">
+            <i class="bi bi-shield-check"></i>
+            <h5 class="mt-3">High Availability</h5>
+            <p class="small text-secondary mb-0">ออกแบบระบบให้ทนต่อความเสียหายและรองรับ Disaster Recovery</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4 mt-4">
+      <div class="col-md-4">
+        <div class="info-card p-4 h-100">
+          <i class="bi bi-geo-alt fs-2" style="color:var(--oracle)"></i>
+          <h5 class="fw-bold mt-3">หลายภูมิภาคทั่วโลก</h5>
+          <p class="text-secondary mb-0">รายงานยกตัวอย่าง Region ในสหรัฐอเมริกา แคนาดา ยุโรป ญี่ปุ่น สิงคโปร์ ออสเตรเลีย และอินเดีย</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="info-card p-4 h-100">
+          <i class="bi bi-speedometer2 fs-2" style="color:var(--oracle)"></i>
+          <h5 class="fw-bold mt-3">ลด Latency</h5>
+          <p class="text-secondary mb-0">การเลือก Region ที่เหมาะสมกับตำแหน่งผู้ใช้งานสามารถช่วยลดระยะทางในการส่งข้อมูลและอาจลด Latency</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="info-card p-4 h-100">
+          <i class="bi bi-arrow-repeat fs-2" style="color:var(--oracle)"></i>
+          <h5 class="fw-bold mt-3">Disaster Recovery</h5>
+          <p class="text-secondary mb-0">สามารถเตรียมระบบสำรองในอีก Region เพื่อรองรับกรณี Region หลักไม่สามารถให้บริการได้</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" style="background:#eef0f3">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="text-uppercase fw-bold small" style="color:var(--oracle)">Pricing Model</div>
+      <h2 class="section-title display-6 mt-2">รูปแบบการคิดค่าบริการ</h2>
+      <p class="section-desc mx-auto mt-3">
+        ค่าใช้บริการขึ้นอยู่กับประเภทและปริมาณทรัพยากรที่เลือกใช้ เช่น CPU, Memory,
+        Storage, Network และ Database
+      </p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="pricing-card">
+          <div class="stat-icon"><i class="bi bi-clock-history"></i></div>
+          <h4 class="fw-bold mt-4">Pay-as-you-go</h4>
+          <p class="text-secondary">จ่ายค่าบริการตามปริมาณทรัพยากรและระยะเวลาที่ใช้งานจริง</p>
+          <hr>
+          <ul class="text-secondary">
+            <li>ไม่ต้องลงทุน Server ล่วงหน้า</li>
+            <li>ปรับทรัพยากรตามการใช้งาน</li>
+            <li>เหมาะกับงานที่ต้องการความยืดหยุ่น</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="pricing-card featured">
+          <div class="stat-icon"><i class="bi bi-gift"></i></div>
+          <h4 class="fw-bold mt-4">Free Tier</h4>
+          <p class="text-secondary">ทดลองใช้บริการ Cloud บางประเภทโดยไม่มีค่าใช้จ่าย ภายใต้เงื่อนไขของ Oracle</p>
+          <hr>
+          <ul class="text-secondary">
+            <li>เหมาะสำหรับนักศึกษา</li>
+            <li>เหมาะสำหรับนักพัฒนา</li>
+            <li>ใช้ทดลองสร้าง Resource และ Application</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="pricing-card">
+          <div class="stat-icon"><i class="bi bi-building"></i></div>
+          <h4 class="fw-bold mt-4">Enterprise</h4>
+          <p class="text-secondary">มีรูปแบบการซื้อเครดิตหรือข้อตกลงการใช้งานสำหรับองค์กร เพื่อวางแผนค่าใช้จ่ายระยะยาว</p>
+          <hr>
+          <ul class="text-secondary">
+            <li>วางแผนค่าใช้จ่ายระยะยาว</li>
+            <li>เหมาะกับปริมาณการใช้งานขององค์กร</li>
+            <li>ขึ้นอยู่กับข้อตกลงกับ Oracle</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert mt-4 border-0 rounded-4 p-4" style="background:#fff1ee">
+      <i class="bi bi-exclamation-triangle-fill me-2" style="color:var(--oracle)"></i>
+      <strong>ข้อควรระวัง:</strong>
+      Free Tier ไม่ได้หมายความว่าบริการทั้งหมดใช้งานได้ฟรีโดยไม่มีข้อจำกัด
+      ควรตรวจสอบเงื่อนไขและ Resource ที่สร้างขึ้นเพื่อป้องกันค่าใช้จ่ายที่ไม่คาดคิด
+    </div>
+  </div>
+</section>
+
+<section id="proscons">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="text-uppercase fw-bold small" style="color:var(--oracle)">Pros & Cons</div>
+      <h2 class="section-title display-6 mt-2">ข้อดีและข้อจำกัด</h2>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-6">
+        <div class="pros-card">
+          <h3 class="fw-bold mb-4"><i class="bi bi-check-circle-fill check me-2"></i>ข้อดี (Pros)</h3>
+          <div class="d-flex gap-3 mb-3"><i class="bi bi-check-lg check"></i><span>มีบริการ Cloud ครบวงจร ครอบคลุม Compute, Storage, Database, Networking, Security, Container, Analytics และ AI</span></div>
+          <div class="d-flex gap-3 mb-3"><i class="bi bi-check-lg check"></i><span>มีจุดเด่นด้าน Database โดยเฉพาะ Oracle Database และ Autonomous Database</span></div>
+          <div class="d-flex gap-3 mb-3"><i class="bi bi-check-lg check"></i><span>รองรับการขยายระบบ สามารถเพิ่มหรือลดทรัพยากรตามปริมาณการใช้งาน</span></div>
+          <div class="d-flex gap-3 mb-3"><i class="bi bi-check-lg check"></i><span>มีระบบรักษาความปลอดภัย เช่น IAM, MFA, Cloud Guard, Firewall และการเข้ารหัสข้อมูล</span></div>
+          <div class="d-flex gap-3 mb-3"><i class="bi bi-check-lg check"></i><span>มี Data Center หลายภูมิภาคทั่วโลก</span></div>
+          <div class="d-flex gap-3"><i class="bi bi-check-lg check"></i><span>รองรับ Kubernetes, Container, Serverless, Big Data, AI และ Machine Learning</span></div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="cons-card">
+          <h3 class="fw-bold mb-4"><i class="bi bi-exclamation-circle-fill cross me-2"></i>ข้อจำกัด (Cons)</h3>
+          <div class="d-flex gap-3 mb-3"><i class="bi bi-x-lg cross"></i><span>มีความซับซ้อนสำหรับผู้เริ่มต้น เนื่องจากมีบริการและการตั้งค่าจำนวนมาก</span></div>
+          <div class="d-flex gap-3 mb-3"><i class="bi bi-x-lg cross"></i><span>ต้องมีความรู้ด้าน Cloud และ Network เพื่อออกแบบและตั้งค่าระบบ</span></div>
+          <div class="d-flex gap-3 mb-3"><i class="bi bi-x-lg cross"></i><span>อาจเกิดค่าใช้จ่ายที่ไม่คาดคิด หากใช้งานเกินเงื่อนไข Free Tier</span></div>
+          <div class="d-flex gap-3 mb-3"><i class="bi bi-x-lg cross"></i><span>ต้องใช้เวลาเรียนรู้ระบบ โดยเฉพาะผู้ที่เปลี่ยนมาจาก AWS หรือ Azure</span></div>
+          <div class="d-flex gap-3 mb-3"><i class="bi bi-x-lg cross"></i><span>บริการบางประเภทมีข้อจำกัดตาม Region</span></div>
+          <div class="d-flex gap-3"><i class="bi bi-x-lg cross"></i><span>ระบบขนาดใหญ่มีความซับซ้อนและอาจต้องใช้ผู้ดูแลที่มีความรู้เฉพาะด้าน</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="certification" style="background:#eef0f3">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="text-uppercase fw-bold small" style="color:var(--oracle)">Certification Path</div>
+      <h2 class="section-title display-6 mt-2">เส้นทางการเรียนรู้ Oracle Certification</h2>
+      <p class="section-desc mx-auto mt-3">
+        เริ่มจากพื้นฐาน Cloud และ OCI แล้วค่อยต่อยอดไปยังสายที่สนใจ
+      </p>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <small class="fw-bold" style="color:var(--oracle)">STEP 01</small>
+          <h5 class="fw-bold mt-2">Foundations</h5>
+          <p class="text-secondary mb-0">ศึกษาพื้นฐาน Cloud Computing และแนวคิดของ Oracle Cloud Infrastructure</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <small class="fw-bold" style="color:var(--oracle)">STEP 02</small>
+          <h5 class="fw-bold mt-2">OCI Fundamentals</h5>
+          <p class="text-secondary mb-0">เรียนรู้ Region, Availability Domain, Compute, Storage, Networking, Database, Security และ Pricing</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <small class="fw-bold" style="color:var(--oracle)">STEP 03</small>
+          <h5 class="fw-bold mt-2">เลือกสายที่สนใจ</h5>
+          <p class="text-secondary mb-0">ต่อยอดไปยัง Architect, Developer, Database, Security หรือ Data</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <small class="fw-bold" style="color:var(--oracle)">STEP 04</small>
+          <h5 class="fw-bold mt-2">Advanced / Professional</h5>
+          <p class="text-secondary mb-0">พัฒนาความเชี่ยวชาญด้าน Infrastructure, DevOps, Security, Data, Database หรือ AI</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ส่วนเพิ่มเติม: ผู้จัดทำและอาจารย์ผู้สอน -->
+<section id="team" style="background:#f8fafc">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="text-uppercase fw-bold small" style="color:var(--oracle)">Project Team & Instructor</div>
+      <h2 class="section-title display-6 mt-2">ผู้จัดทำและอาจารย์ผู้สอน</h2>
+      <p class="section-desc mx-auto mt-3">
+        รายงานเรื่อง Oracle Cloud Infrastructure (OCI)<br>
+        วิชาเทคโนโลยีการประมวลผลคลาวด์ (รหัสวิชา 0904327) ภาคเรียนที่ 1 ปีการศึกษา 2569
+      </p>
+    </div>
+
+    <!-- อาจารย์ผู้สอน -->
+    <div class="row justify-content-center mb-5">
+      <div class="col-lg-6 col-md-8">
+        <div class="stat-card text-center p-4" style="border-top: 4px solid var(--oracle);">
+          <div class="stat-icon mx-auto mb-3"><i class="bi bi-person-badge-fill"></i></div>
+          <span class="badge bg-danger mb-2 px-3 py-2 rounded-pill">เสนอ</span>
+          <h4 class="fw-bold text-dark mt-1">อาจารย์อิทธิพล เอี่ยมภูงา</h4>
+          <p class="text-secondary small mb-0">อาจารย์ผู้สอนประจำวิชา</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- สมาชิกในกลุ่ม -->
+    <div class="text-center mb-4">
+      <h4 class="fw-bold section-title"><i class="bi bi-people-fill me-2" style="color:var(--oracle)"></i>คณะผู้จัดทำ</h4>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-lg-4 col-md-6">
+        <div class="stat-card p-3 d-flex align-items-center gap-3">
+          <div class="stat-icon" style="width:42px;height:42px;font-size:1.2rem;"><i class="bi bi-person"></i></div>
+          <div>
+            <div class="small text-muted fw-bold">67010918002</div>
+            <h6 class="fw-bold mb-0 text-dark">นายพชร ณรงค์นอก</h6>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="stat-card p-3 d-flex align-items-center gap-3">
+          <div class="stat-icon" style="width:42px;height:42px;font-size:1.2rem;"><i class="bi bi-person"></i></div>
+          <div>
+            <div class="small text-muted fw-bold">67010918036</div>
+            <h6 class="fw-bold mb-0 text-dark">นางสาวปิยาพัชร ประเสริฐสังข์</h6>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="stat-card p-3 d-flex align-items-center gap-3">
+          <div class="stat-icon" style="width:42px;height:42px;font-size:1.2rem;"><i class="bi bi-person"></i></div>
+          <div>
+            <div class="small text-muted fw-bold">67010918050</div>
+            <h6 class="fw-bold mb-0 text-dark">นายธนวัฒน์ เวียงศรีประเสริฐ</h6>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="stat-card p-3 d-flex align-items-center gap-3">
+          <div class="stat-icon" style="width:42px;height:42px;font-size:1.2rem;"><i class="bi bi-person"></i></div>
+          <div>
+            <div class="small text-muted fw-bold">67010918032</div>
+            <h6 class="fw-bold mb-0 text-dark">นายธีรภัทร เพียช่อ</h6>
+          </div>
+        </div>
+      </div>
+
+      
+
+      <div class="col-lg-4 col-md-6">
+        <div class="stat-card p-3 d-flex align-items-center gap-3">
+          <div class="stat-icon" style="width:42px;height:42px;font-size:1.2rem;"><i class="bi bi-person"></i></div>
+          <div>
+            <div class="small text-muted fw-bold">67010918109</div>
+            <h6 class="fw-bold mb-0 text-dark">นางสาวพรรณภา ศรีคงเพชร</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-5">
+      <p class="text-secondary small mb-0">
+        คณะการบัญชีและการจัดการ สาขาธุรกิจดิจิทัลและระบบสารสนเทศ มหาวิทยาลัยมหาสารคาม
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="summary">
+  <div class="container">
+    <div class="summary-box">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-8">
+          <div class="small text-uppercase fw-bold mb-2">Final Summary</div>
+          <h2 class="fw-bold display-6">Oracle Cloud Infrastructure</h2>
+          <p class="mb-0 opacity-75">
+            OCI เป็นแพลตฟอร์ม Cloud Computing ที่ให้บริการครอบคลุมทั้ง Infrastructure,
+            Platform, Database, Storage, Networking, Security, Container, Serverless,
+            Analytics และเทคโนโลยีอื่น ๆ สามารถนำไปสร้างและบริหารระบบสารสนเทศได้หลากหลายรูปแบบ
+          </p>
+        </div>
+        <div class="col-lg-4 text-lg-end">
+          <a href="#home" class="btn btn-light fw-bold px-4 py-3 rounded-3">
+            <i class="bi bi-arrow-up me-2"></i>กลับด้านบน
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="references" style="background:#fff">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="text-uppercase fw-bold small" style="color:var(--oracle)">References</div>
+      <h2 class="section-title display-6 mt-2">บรรณานุกรม</h2>
+    </div>
+
+    <div class="list-group shadow-sm rounded-4 overflow-hidden">
+      <a class="list-group-item list-group-item-action py-3" href="https://www.oracle.com/big-data/" target="_blank">Oracle — Big Data</a>
+      <a class="list-group-item list-group-item-action py-3" href="https://www.oracle.com/cloud/compute/" target="_blank">Oracle — Cloud Compute</a>
+      <a class="list-group-item list-group-item-action py-3" href="https://www.oracle.com/security/cloud-security/cloud-guard/" target="_blank">Oracle — Cloud Guard</a>
+      <a class="list-group-item list-group-item-action py-3" href="https://www.oracle.com/security/cloud-security/" target="_blank">Oracle — Cloud Security</a>
+      <a class="list-group-item list-group-item-action py-3" href="https://www.oracle.com/cloud/storage/" target="_blank">Oracle — Cloud Storage</a>
+      <a class="list-group-item list-group-item-action py-3" href="https://www.oracle.com/cloud/free/" target="_blank">Oracle — Cloud Free Tier</a>
+      <a class="list-group-item list-group-item-action py-3" href="https://docs.oracle.com/en-us/iaas/Content/Compute/home.htm" target="_blank">Oracle Cloud Infrastructure Documentation — Compute</a>
+      <a class="list-group-item list-group-item-action py-3" href="https://docs.oracle.com/en-us/iaas/Content/Balance/home.htm" target="_blank">Oracle Cloud Infrastructure Documentation — Load Balancer</a>
+      <a class="list-group-item list-group-item-action py-3" href="https://docs.oracle.com/en-us/iaas/Content/container-instances/home.htm" target="_blank">Oracle Cloud Infrastructure Documentation — Container Instances</a>
+      <a class="list-group-item list-group-item-action py-3" href="https://docs.oracle.com/en-us/iaas/Content/Functions/home.htm" target="_blank">Oracle Cloud Infrastructure Documentation — Functions</a>
+      <a class="list-group-item list-group-item-action py-3" href="https://docs.oracle.com/en-us/iaas/Content/General/Concepts/regions.htm" target="_blank">Oracle Cloud Infrastructure Documentation — Regions and Availability Domains</a>
+      <a class="list-group-item list-group-item-action py-3" href="https://docs.oracle.com/en-us/iaas/Content/Security/Concepts/security_overview.htm" target="_blank">Oracle Cloud Infrastructure Documentation — Security Overview</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="row g-4 align-items-center">
+      <div class="col-md-8">
+        <strong>ORACLE CLOUD INFRASTRUCTURE</strong>
+        <div class="small mt-2">รายงานวิชาเทคโนโลยีการประมวลผลคลาวด์ รหัสวิชา 0904327</div>
+        <div class="small">เสนอ อาจารย์อิทธิพล เอี่ยมภูงา</div>
+        <div class="small">คณะการบัญชีและการจัดการ สาขาธุรกิจดิจิทัลและระบบสารสนเทศ มหาวิทยาลัยมหาสารคาม</div>
+      </div>
+      <div class="col-md-4 text-md-end">
+        <div class="small">ภาคเรียนที่ 1 ปีการศึกษา 2569</div>
+        <div class="small mt-1">Oracle Cloud • OCI</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<button class="back-top" id="backTop" aria-label="Back to top">
+  <i class="bi bi-arrow-up"></i>
+</button>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  const backTop = document.getElementById('backTop');
+
+  window.addEventListener('scroll', () => {
+    backTop.style.display = window.scrollY > 500 ? 'block' : 'none';
+  });
+
+  backTop.addEventListener('click', () => {
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+
+  document.querySelectorAll('.navbar .nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      const nav = document.getElementById('mainNav');
+      if (nav.classList.contains('show')) {
+        bootstrap.Collapse.getOrCreateInstance(nav).hide();
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
